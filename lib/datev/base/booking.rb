@@ -40,9 +40,8 @@ module Datev
     # Darf max. 8- bzw. max. 9-stellig sein (abhängig von der Information im Header)
     # Die Personenkontenlänge darf nur 1 Stelle länger sein als die definierte Sachkontennummernlänge.
 
-      def output(value, context)
-        length = context['Sachkontenlänge']
-        value.to_s.rjust(length, '0')
+      def output(value)
+        value.to_s.rjust(4, '0')
       end
     end
 
@@ -52,9 +51,8 @@ module Datev
     # Darf max. 8- bzw. max. 9-stellig sein (abhängig von der Information im Header)
     # Die Personenkontenlänge darf nur 1 Stelle länger sein als die definierte Sachkontennummernlänge.
 
-      def output(value, context)
-        length = context['Sachkontenlänge']
-        value.to_s.rjust(length, '0')
+      def output(value)
+        value.to_s.rjust(4, '0')
       end
     end
 

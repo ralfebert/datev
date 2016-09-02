@@ -6,8 +6,7 @@ module Datev
       attr_accessor :header_class, :row_class
     end
 
-    def initialize(header_attributes)
-      @header = self.class.header_class.new(header_attributes)
+    def initialize()
       @rows = []
     end
 
@@ -30,11 +29,10 @@ module Datev
   private
 
     def write(csv)
-      csv << @header.output
       csv << self.class.row_class.fields.map(&:name)
 
       @rows.each do |row|
-        csv << row.output(@header)
+        csv << row.output()
       end
     end
   end

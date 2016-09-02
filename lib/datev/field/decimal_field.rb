@@ -17,7 +17,7 @@ module Datev
       end
     end
 
-    def output(value, _context=nil)
+    def output(value)
       ("%.#{scale}f" % value).sub('.',',') if value
     end
   end

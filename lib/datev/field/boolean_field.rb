@@ -8,7 +8,7 @@ module Datev
       end
     end
 
-    def output(value, _context=nil)
+    def output(value)
       value ? 1 : 0 unless value.nil?
     end
   end

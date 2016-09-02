@@ -6,7 +6,7 @@ class Person < Datev::Base
   field 'weight',          :decimal, :precision => 4, :scale => 1
   field 'birthday',        :date, :format => '%d%m%Y'
   field 'alive',           :boolean do
-    def output(value, context)
+    def output(value)
       value ? 'yes' : 'no'
     end
   end
@@ -92,11 +92,6 @@ describe Datev::Base do
   describe :output do
     it "should return array with formatted values" do
       expect(person.output).to eq([ 'John', '666', '83,6', '30041975', 'yes' ])
-    end
-
-    it "should pass context to field's output method" do
-      expect(Person.fields[0]).to receive(:output).with('John', 42)
-      person.output(42)
     end
   end
 end

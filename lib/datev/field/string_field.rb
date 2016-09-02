@@ -13,7 +13,7 @@ module Datev
       end
     end
 
-    def output(value, _context=nil)
+    def output(value)
       value.slice(0, limit || 255) if value
     end
   end

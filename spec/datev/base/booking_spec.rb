@@ -34,19 +34,11 @@ describe Datev::Booking do
     }
 
     it "should pad strings with zeros" do
-      header = Datev::Header.new 'Sachkontenlänge' => 6
-      output = booking.output(header)
-
-      expect(output[6]).to eq('000400')
-      expect(output[7]).to eq('070000')
-    end
-
-    it "should allow longer strings" do
-      header = Datev::Header.new 'Sachkontenlänge' => 4
-      output = booking.output(header)
+      output = booking.output()
 
       expect(output[6]).to eq('0400')
       expect(output[7]).to eq('70000')
     end
+
   end
 end

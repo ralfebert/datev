@@ -12,7 +12,7 @@ module Datev
       end
     end
 
-    def output(value, _context=nil)
+    def output(value)
       value.strftime(format) if value
     end
   end

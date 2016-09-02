@@ -27,77 +27,17 @@ describe Datev::BookingExport do
   }
 
   let(:export) do
-    export = Datev::BookingExport.new(
-      'Herkunft'        => 'XY',
-      'Exportiert von'  => 'Chief Accounting Officer',
-      'Erzeugt am'      => Time.new(2016,6,23,15,25,0, '+02:00'),
-      'Berater'         => 1001,
-      'Mandant'         => 456,
-      'WJ-Beginn'       => Date.new(2016,1,1),
-      'Datum vom'       => Date.new(2016,6,1),
-      'Datum bis'       => Date.new(2016,6,30),
-      'Bezeichnung'     => 'Beispiel-Buchungen'
-    )
-
+    export = Datev::BookingExport.new()
     export << booking1
     export << booking2
     export
   end
 
   describe :initialize do
-    it "should accept Hash with valid keys" do
+    it "should initialize without error" do
       expect {
-        Datev::BookingExport.new(
-          'Berater' => 1001,
-          'Mandant' => 456
-        )
+        Datev::BookingExport.new()
       }.to_not raise_error
-    end
-
-    it "should accept blank Hash" do
-      expect {
-        Datev::BookingExport.new({})
-      }.to_not raise_error
-    end
-
-    it "should not accept Hash with invalid keys" do
-      expect {
-        Datev::BookingExport.new(
-          'foo' => 'bar'
-        )
-      }.to raise_error(ArgumentError, "Field 'foo' not found")
-    end
-
-    it "should not accept other types" do
-      expect {
-        Datev::BookingExport.new(42)
-      }.to raise_error(ArgumentError, "Hash required")
-    end
-  end
-
-  describe :<< do
-    it "should accept Hash with valid keys" do
-      expect {
-        export << {
-          'Belegdatum'                     => Date.today,
-          'Umsatz (ohne Soll/Haben-Kz)'    => 24.95,
-          'Soll/Haben-Kennzeichen'         => 'H',
-          'Konto'                          => 1200,
-          'Gegenkonto (ohne BU-Schlüssel)' => 4940
-        }
-      }.to_not raise_error
-    end
-
-    it "should not accept hash with missing keys" do
-      expect {
-        export << {}
-      }.to raise_error(ArgumentError, "Value for field 'Umsatz (ohne Soll/Haben-Kz)' is required but missing")
-    end
-
-    it "should not accept other types" do
-      expect {
-        export << 42
-      }.to raise_error(ArgumentError, "Hash required")
     end
   end
 
@@ -106,27 +46,23 @@ describe Datev::BookingExport do
 
     it 'should export as string' do
       expect(subject).to be_a(String)
-      expect(subject.lines.length).to eq(4)
+      expect(subject.lines.length).to eq(3)
     end
 
     it "should encode in Windows-1252" do
       expect(subject.encoding).to eq(Encoding::WINDOWS_1252)
     end
 
-    it "should contain header" do
-      expect(subject.lines[0]).to include('EXTF;510')
-    end
-
     it "should contain field names" do
-      expect(subject.lines[1]).to include('Umsatz (ohne Soll/Haben-Kz);Soll/Haben-Kennzeichen')
+      expect(subject.lines.first).to include('Umsatz (ohne Soll/Haben-Kz);Soll/Haben-Kennzeichen')
     end
 
     it "should contain bookings" do
-      expect(subject.lines[2]).to include('4940')
-      expect(subject.lines[2].encode(Encoding::UTF_8)).to include('Controlling für Dummies')
+      expect(subject.lines[1]).to include('4940')
+      expect(subject.lines[1].encode(Encoding::UTF_8)).to include('Controlling für Dummies')
 
-      expect(subject.lines[3]).to include('8400')
-      expect(subject.lines[3].encode(Encoding::UTF_8)).to include('Honorar FiBu-Seminar')
+      expect(subject.lines[2]).to include('8400')
+      expect(subject.lines[2].encode(Encoding::UTF_8)).to include('Honorar FiBu-Seminar')
     end
   end
 

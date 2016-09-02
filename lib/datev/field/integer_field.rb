@@ -23,7 +23,7 @@ module Datev
       end
     end
 
-    def output(value, _context=nil)
+    def output(value)
       value.to_s if value
     end
   end
