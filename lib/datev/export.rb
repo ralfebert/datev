@@ -1,6 +1,5 @@
 module Datev
   class Export
-    CSV_OPTIONS = { :col_sep => ';', :encoding => 'windows-1252' }
 
     class << self
       attr_accessor :header_class, :row_class
@@ -15,25 +14,19 @@ module Datev
     end
 
     def to_s
-      CSV.generate(CSV_OPTIONS) do |csv|
-        write(csv)
+      csv = ""
+      csv << self.class.row_class.fields.map(&:name).join(";") + "\n"
+      @rows.each do |row|
+        csv << self.class.row_class.fields.map { |f| f.output(row[f.name]) }.join(";") + "\n"
       end
+      csv.encode(Encoding::ISO_8859_1)
     end
 
     def to_file(filename)
-      CSV.open(filename, 'wb', CSV_OPTIONS) do |csv|
-        write(csv)
+      File.open(filename, 'wb:ISO-8859-1') do |csv|
+        csv.write(self.to_s)
       end
     end
-
-  private
-
-    def write(csv)
-      csv << self.class.row_class.fields.map(&:name)
-
-      @rows.each do |row|
-        csv << row.output()
-      end
-    end
+    
   end
 end

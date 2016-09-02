@@ -25,12 +25,12 @@ module Datev
     # Achtung: Der Wert 0 ist unzulässig.
 
     # 5
-    field 'Basisumsatz', :decimal, :precision => 12, :scale => 2
+    field 'Basis-Umsatz', :decimal, :precision => 12, :scale => 2
     # Wenn das Feld Basisumsatz verwendet wird, muss auch das Feld WKZ Basisumsatz gefüllt werden.
     # Beispiel: 1123123123,12
 
     # 6
-    field 'WKZ Basisumsatz', :string, :limit => 3
+    field 'WKZ Basis-Umsatz', :string, :limit => 3
     # Währungskennzeichen der hinterlegten Basiswährung. Wenn das Feld WKZ Basisumsatz verwendet wird, muss auch das Feld Basisumsatz verwendet werden.
     # ISO-Code beachten (siehe Dok.-Nr.1080170)
 
@@ -126,8 +126,8 @@ module Datev
 
     # 21 bis 36
     (1..8).each do |number|
-      field "Beleginfo – Art #{number}", :string, :limit => 20
-      field "Beleginfo – Inhalt #{number}", :string, :limit => 210
+      field "Beleginfo - Art #{number}", :string, :limit => 20
+      field "Beleginfo - Inhalt #{number}", :string, :limit => 210
     end
     # Bei einem ASCII-Format, das aus einem DATEV pro-Rechnungswesen-Programm erstellt wurde, können diese Felder Informationen aus einem Beleg (z. B. einem elektronischen Kontoumsatz) enthalten.
     # Wenn die Feldlänge eines Beleginfo-Inhalts-Felds überschritten wird, wird die Information im nächsten Beleginfo-Feld weitergeführt.
@@ -140,20 +140,20 @@ module Datev
     # Buchungsspezifische Inhalte zu den oben genannten Informationsarten
 
     # 37
-    field 'KOST1 – Kostenstelle', :string, :limit => 8
+    field 'KOST1 - Kostenstelle', :string, :limit => 8
     # Über KOST1 erfolgt die Zuordnung des Geschäftsvorfalls für die anschließende Kostenrechnung.
 
     # 38
-    field 'KOST2 – Kostenstelle', :string, :limit => 8
+    field 'KOST2 - Kostenstelle', :string, :limit => 8
     # Über KOST2 erfolgt die Zuordnung des Geschäftsvorfalls für die anschließende Kostenrechnung.
 
     # 39
-    field 'Kost Menge', :decimal, :precision => 11, :scale => 2
+    field 'Kost-Menge', :decimal, :precision => 11, :scale => 2
     # Im KOST-Mengenfeld wird die Wertgabe zu einer bestimmten Bezugsgröße für eine Kostenstelle erfasst. Diese Bezugsgröße kann z. B. kg, g, cm, m, % sein. Die Bezugsgröße ist definiert in den Kostenrechnungs-Stammdaten.
     # Beispiel: 123123123,12
 
     # 40
-    field 'EU-Land u. USt-IdNr.', :string, :limit => 15
+    field 'EU-Land u. UStID', :string, :limit => 15
     # Die USt-IdNr. besteht aus:
     # 2-stelligen Länderkürzel (siehe Dok.-Nr. 1080169; Ausnahme Griechenland: Das Länderkürzel lautet EL)
     # 13-stelliger USt-IdNr.
@@ -196,8 +196,8 @@ module Datev
 
     # 48 bis 87
     (1..20).each do |number|
-      field "Zusatzinformation – Inhalt #{number}", :string, :limit => 210
-      field "Zusatzinformation – Art #{number}", :string, :limit => 20
+      field "Zusatzinformation - Art #{number}", :string, :limit => 20
+      field "Zusatzinformation- Inhalt #{number}", :string, :limit => 210
     end
     # Zusatzinformationen, die zu Buchungssätzen erfasst werden können.
     # Diese Zusatzinformationen besitzen den Charakter eines Notizzettels und können frei erfasst werden.
@@ -257,7 +257,7 @@ module Datev
     # USt-Schlüssel der späteren Schlussrechnung
 
     # 98
-    field 'EU-Mitgliedstaat (Anzahlungen)', :string, :limit => 2
+    field 'EU-Land (Anzahlungen)', :string, :limit => 2
     # EU-Mitgliedstaat der späteren Schlussrechnung
     # (siehe Dok.-Nr. 1080169)
 
@@ -282,7 +282,7 @@ module Datev
     # Wird beim Import durch SV (Stapelverarbeitung) ersetzt.
 
     # 103
-    field 'Leerfeld', :string, :limit => 36
+    field 'Buchungs GUID', :string, :limit => 36
     # Wird von DATEV verwendet.
 
     # 104
@@ -302,7 +302,7 @@ module Datev
     field 'Gesellschaftername', :string, :limit => 76
 
     # 108
-    field 'Beteiligtennummer', :integer, :limit => 4
+    field 'Beteiligtennummer', :string
 
     # 109
     field 'Identifikationsnummer', :string, :limit => 11
@@ -314,11 +314,11 @@ module Datev
     field 'Postensperre bis', :date, :format => '%d%m%Y'
 
     # 112
-    field 'Bezeichnung', :string, :limit => 30
+    field 'Bezeichnung SoBil-Sachverhalt', :string, :limit => 30
     # SoBil-Sachverhalt
 
     # 113
-    field 'Kennzeichen', :integer, :limit => 2
+    field 'Kennzeichen SoBil-Buchung', :integer, :limit => 2
     # SoBil-Buchung
 
     # 114
@@ -333,7 +333,7 @@ module Datev
     field 'Leistungsdatum', :date, :format => '%d%m%Y'
 
     # 116
-    field 'Datum Zuord.', :date, :format => '%d%m%Y'
+    field 'Datum Zuord. Steuerperiode', :date, :format => '%d%m%Y'
     # Steuerperiode
   end
 end

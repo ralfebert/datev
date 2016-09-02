@@ -25,16 +25,7 @@ Or install it yourself as:
 ## Usage
 
 ```ruby
-export = Datev::BookingExport.new(
-  'Herkunft'        => 'XY',
-  'Exportiert von'  => 'Chief Accounting Officer',
-  'Berater'         => 1001,
-  'Mandant'         => 456,
-  'WJ-Beginn'       => Date.new(2016,1,1),
-  'Datum vom'       => Date.new(2016,6,1),
-  'Datum bis'       => Date.new(2016,6,30),
-  'Bezeichnung'     => 'Beispiel-Buchungen'
-) # For available hash keys see /lib/datev/header.rb
+export = Datev::BookingExport.new()
 
 export << {
   'Belegdatum'                     => Date.new(2016,6,21),
@@ -56,7 +47,7 @@ export << {
   'Belegfeld 1'                    => 'RE201606-135'
 }
 
-export.to_file('EXTF_Buchungsstapel.csv')
+export.to_file('Buchungsstapel.csv')
 ```
 
 Result: [CSV file](examples/EXTF_Buchungsstapel.csv)

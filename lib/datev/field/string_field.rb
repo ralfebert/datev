@@ -14,7 +14,9 @@ module Datev
     end
 
     def output(value)
-      value.slice(0, limit || 255) if value
+      value = value || ""
+      raise "Quotation marks in string field are not allowed, got: #{value}" if value.include?('"')
+      '"' + value.slice(0, limit || 255) + '"'
     end
   end
 end

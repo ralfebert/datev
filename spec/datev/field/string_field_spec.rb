@@ -18,12 +18,12 @@ describe Datev::StringField do
   end
 
   describe :output do
-    it "should return unchanged value" do
-      expect(subject.output('foo')).to eq('foo')
+    it "should return quoted value" do
+      expect(subject.output('foo')).to eq('"foo"')
     end
 
     it "should truncate string to limit" do
-      expect(subject.output('1234567')).to eq('123')
+      expect(subject.output('1234567')).to eq('"123"')
     end
   end
 end

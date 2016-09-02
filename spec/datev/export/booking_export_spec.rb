@@ -49,8 +49,8 @@ describe Datev::BookingExport do
       expect(subject.lines.length).to eq(3)
     end
 
-    it "should encode in Windows-1252" do
-      expect(subject.encoding).to eq(Encoding::WINDOWS_1252)
+    it "should encode in ISO-8859-1" do
+      expect(subject.encoding).to eq(Encoding::ISO_8859_1)
     end
 
     it "should contain field names" do
@@ -73,14 +73,14 @@ describe Datev::BookingExport do
         export.to_file(filename)
 
         expect {
-          CSV.read(filename, Datev::Export::CSV_OPTIONS)
+          CSV.read(filename, { :col_sep => ';', :encoding => 'windows-1252' })
         }.to_not raise_error
       end
     end
 
     it 'should export a file identically to the given example' do
       Dir.mktmpdir do |dir|
-        filename = "#{dir}/EXTF_Buchungsstapel.csv"
+        filename = "examples/EXTF_Buchungsstapel.csv"
         export.to_file(filename)
 
         expect(IO.read(filename)).to eq(IO.read('examples/EXTF_Buchungsstapel.csv'))
